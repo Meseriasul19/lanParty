@@ -39,3 +39,4 @@ void insertPlayer(Player * players ,int p, char fName[], char sName[]) {
     players -> secondName = (char*)malloc(sizeof(char) * (strlen(sName)+1));
     strcpy(players -> secondName, sName);
 }
+

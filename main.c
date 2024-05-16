@@ -1,53 +1,35 @@
-#include "game.h"
+
+#include "tasks.h"
+//argv[1] = c.in (task-ul)
+//argv[2] = d.in (fisierul citit)
+//argv[3] = out.out (fisierul in care scriu)
 
 int main(int argc, char *argv[])
-{
-    FILE *f = fopen(argv[2], "rt");
-
-    int numar_echipe;
-    fscanf(f, "%d", &numar_echipe);
-
+{ 
+    FILE * tasks = fopen(argv[1], "rt");
+    FILE * input = fopen(argv[2], "rt");
+    FILE * output = fopen(argv[3], "wt");
+    
+    int nr_teams;
+    fscanf(input, "%d", &nr_teams);
     Node * node = NULL;
 
-   for(int i = 0; i < numar_echipe; i++) {
+    int * v = (int*)malloc(sizeof(int) * 5);
+    for(int i=0; i<5; i++) fscanf(tasks, "%d", &v[i]);
 
-        int nr_players;
-        char buffer[50];
+    if (v[0]) task1(input, output, &node, nr_teams); //TASK 1
 
-        fscanf(f, "%d", &nr_players);
-        fseek(f, 1L, SEEK_CUR);
-        fgets(buffer, 50, f);
-        buffer[strlen(buffer)-1] = '\0';
+    /*
+    if (v[1]) task2(output, &node, nr_teams); 
+    if (v[2]) task3(output, &node, nr_teams);
+    if (v[3]) task4(output, &node, nr_teams);
+    if (v[4]) task5(output, &node, nr_teams);
+    */
 
-        insertTeam (&node , nr_players, buffer);
-        
-        for(int j = 0; j < nr_players; j++)
-        {
-            int points;
-            char buffer2[50];
-
-            fscanf(f, "%s", buffer);
-            fscanf(f, "%s", buffer2);
-            fscanf(f, "%d", &points);
-            fseek(f, 2L, SEEK_CUR);
-
-            insertPlayer (&(node -> team -> players[j]), points, buffer, buffer2);
-        }
-
-   }
-
-   fclose(f);
-
-   //afisare
-
-   f = fopen(argv[3], "wt");
-
-   if(f == NULL) {
-    printf("Nu s-a deschis");
-   }
-
-    for(Node * n = node; n!= NULL; n = n -> next) 
-        fprintf(f,"%s\n", n->team->team_name);
+    free(v);
+    fclose(tasks);
+    fclose(input);
+    fclose(output);
 
     return 0;
 }

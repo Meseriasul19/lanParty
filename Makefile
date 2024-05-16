@@ -1,5 +1,5 @@
 
 all:
-	gcc main.c game.c -o lanParty
+	gcc *.c -o lanParty
 clean:
 	rm -f lanParty
