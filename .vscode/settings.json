@@ -3,6 +3,7 @@
         "string.h": "c",
         "game.h": "c",
         "tasks.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "linkedlist.h": "c"
     }
 }

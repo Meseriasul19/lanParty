@@ -1,3 +1,4 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +15,7 @@ typedef struct Player Player;
 
 struct Team {
     int nr_players;
+    float team_points;
     char * team_name;
     Player * players;
 };
@@ -27,6 +29,3 @@ struct Node{
 };
 
 typedef struct Node Node;
-
-void insertTeam ( Node ** , int , char[]  );
-void insertPlayer(Player *  ,int, char[] , char[] );

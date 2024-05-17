@@ -1,4 +1,4 @@
-#include "game.h"
+#include "linkedList.h"
 
 //adaugare element
 void insertTeam ( Node ** prevNode , int nr, char name[]) {
@@ -38,5 +38,33 @@ void insertPlayer(Player * players ,int p, char fName[], char sName[]) {
 
     players -> secondName = (char*)malloc(sizeof(char) * (strlen(sName)+1));
     strcpy(players -> secondName, sName);
+}
+
+void freeTeam(Node * n) {
+
+    for(int i=0; i < (n) -> team -> nr_players; i++) {
+        free(n -> team -> players[i].firstName);
+        free(n -> team -> players[i].secondName);
+    }
+
+    free(n -> team -> players);
+    free(n -> team -> team_name);
+    free(n -> team);
+}
+
+void deleteNode(Node ** n, Node ** prev) {
+    if ((*prev) != (*n)) {
+        freeTeam(*n);
+        Node * aux = (*n);
+        *n = (*n) -> next;
+        free(aux);
+        (*prev) -> next = (*n);
+    }
+    else {
+        freeTeam(*n);
+        Node * aux = (*n);
+        *n = (*n) -> next;
+        free(aux);
+    }
 }
 
