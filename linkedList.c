@@ -1,18 +1,37 @@
 #include "linkedList.h"
 
+void removeReturn(Node ** node) {
+    if ((*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] == '\r')
+    {
+        (*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] = '\0';
+        (*node) -> team -> team_name = (char*)realloc((*node) -> team -> team_name, strlen((*node) -> team -> team_name));
+    } 
+}
+
+void removespace(Node ** node) {
+    if ((*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] == ' ')
+    {
+        (*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] = '\0';
+        (*node) -> team -> team_name = (char*)realloc((*node) -> team -> team_name, strlen((*node) -> team -> team_name));
+    } 
+}
+
 //adaugare element
-void insertTeam ( Node ** prevNode , int nr, char name[]) {
+void insertTeam ( Node ** node , int nr, char name[]) {
 
-    if(*prevNode == NULL) {
-        *prevNode =( Node *) malloc ( sizeof ( Node ));  
-        (*prevNode) -> team =( Team *) malloc ( sizeof ( Team ));  
-        (*prevNode) -> team -> players = ( Player *)malloc(sizeof(Player) * nr); 
+    if(* node == NULL) {
+        * node =( Node *) malloc ( sizeof ( Node ));  
+        (* node) -> team =( Team *) malloc ( sizeof ( Team ));  
+        (* node) -> team -> players = ( Player *)malloc(sizeof(Player) * nr); 
 
-        (*prevNode) -> team -> nr_players = nr;
-        (*prevNode) -> team -> team_name = (char*)malloc(sizeof(char) * (strlen(name)+1));
-        strcpy((*prevNode) -> team -> team_name, name);
+        (* node) -> team -> nr_players = nr;
 
-        (*prevNode) -> next = NULL;
+        (* node) -> team -> team_name = (char*)malloc(sizeof(char) * (strlen(name)+1));
+        strcpy((* node) -> team -> team_name, name);
+        removeReturn(node);
+        removespace(node);   
+
+        (* node) -> next = NULL;
 
         return;
     }
@@ -22,11 +41,14 @@ void insertTeam ( Node ** prevNode , int nr, char name[]) {
     newNode -> team -> players = ( Player *)malloc(sizeof(Player) * nr); 
                        
     newNode -> team -> nr_players = nr;
+
     newNode -> team -> team_name = (char*)malloc(sizeof(char) * (strlen(name)+1));
     strcpy(newNode -> team -> team_name, name);
-
-    newNode -> next = *prevNode;                               
-    *prevNode = newNode ;                                       
+    removeReturn(&newNode);
+    removespace(&newNode);
+    
+    newNode -> next = *node;                               
+    *node = newNode ;                                       
 }
 
 void insertPlayer(Player * players ,int p, char fName[], char sName[]) {

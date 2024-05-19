@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 struct Player
 {
     char * firstName;
