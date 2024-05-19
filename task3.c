@@ -1,5 +1,10 @@
 #include "tasks.h"
 
+void generateLeaderBoard(Node ** lb, Node * n) {
+    insertTeam(lb, n -> team -> nr_players, n -> team -> team_name);
+    (*lb) -> team -> team_points = n -> team -> team_points;
+}
+
 Node * winner(Node ** match) {
     if(match[0] -> team -> team_points > match[1] -> team -> team_points) {
         match[0] -> team -> team_points ++;
@@ -32,7 +37,7 @@ void printwinner(FILE * output, Node * w) {
     fprintf(output, "%.2f\n", w -> team -> team_points);
 }
 
-Team * play(FILE * output, Node ** node, Q * queue, int nr_round) {
+Team * play(FILE * output, Node ** node, Q * queue, int nr_round, Node ** leaderboard) {
  
     Node ** match;
     Node * winnersTop = NULL;
@@ -44,11 +49,13 @@ Team * play(FILE * output, Node ** node, Q * queue, int nr_round) {
         insertmatch(n, n-> next, queue);
     }
 
+    int cont = 0;
     fprintf(output, "\n--- ROUND NO:%d\n", nr_round);
     while(!isEmptyQ(queue)) {
         match = extractmatch(queue);
 
         w = winner(match);
+        cont++;
         l = loser(match);
 
         push(w, &winnersTop);
@@ -57,19 +64,23 @@ Team * play(FILE * output, Node ** node, Q * queue, int nr_round) {
         printmatch(output, match);  
     }
 
+    
     fprintf(output, "\nWINNERS OF ROUND NO:%d\n", nr_round);
-    for(Node * n = winnersTop; n != NULL; n = n -> next) printwinner(output, n);
+    for(Node * n = winnersTop; n != NULL; n = n -> next) {
+        printwinner(output, n);
+        if(cont == 8) generateLeaderBoard(leaderboard, n);
+    }
 
     deleteStack(&losersTop);
     nr_round++;
-    if(winnersTop -> next != NULL) play(output, &winnersTop, queue, nr_round);
+    if(winnersTop -> next != NULL) play(output, &winnersTop, queue, nr_round, leaderboard);
     else return (winnersTop -> team);
 }
 
-void task3(FILE * output, Node ** node) {
+void task3(FILE * output, Node ** node, Node ** leaderboard) {
     Q * queue = NULL;
     queue = createqueue();
     Team * TheBigWinner;
     int nr_round = 1;
-    TheBigWinner = play(output, node, queue, nr_round);
+    TheBigWinner = play(output, node, queue, nr_round, leaderboard); //OPTIONAL : finding the big winner of the game
 }

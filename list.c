@@ -1,4 +1,4 @@
-#include "linkedList.h"
+#include "list.h"
 
 void removeReturn(Node ** node) {
     if ((*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] == '\r')
@@ -76,17 +76,18 @@ void freeTeam(Node * n) {
 
 void deleteNode(Node ** n, Node ** prev) {
     if ((*prev) != (*n)) {
-        freeTeam(*n);
-        Node * aux = (*n);
-        *n = (*n) -> next;
-        free(aux);
+        freeNode(n);
         (*prev) -> next = (*n);
     }
     else {
-        freeTeam(*n);
-        Node * aux = (*n);
-        *n = (*n) -> next;
-        free(aux);
+        freeNode(n);
     }
+}
+
+void freeNode(Node ** n) {
+    freeTeam(*n);
+    Node * aux = (*n);
+    *n = (*n) -> next;
+    free(aux);
 }
 

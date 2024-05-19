@@ -18,9 +18,10 @@ int main(int argc, char *argv[])
 
     if (v[0]) task1(input, output, &node, v, nr_teams); 
     if (v[1]) task2(output, &node, nr_teams); 
-    if (v[2]) task3(output, &node);
+    Node * leaderboard;
+    if (v[2]) task3(output, &node, &leaderboard);
+    if (v[3]) task4(output, &leaderboard);
     /*
-    if (v[3]) task4(output, &node, nr_teams);
     if (v[4]) task5(output, &node, nr_teams);
     */
 
