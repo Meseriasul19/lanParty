@@ -7,4 +7,5 @@
 void task1(FILE *, FILE *, Node ** ,int *,  int);
 void task2(FILE *, Node ** , int);
 void task3(FILE *, Node **, Node **);
-void task4(FILE *, Node **);
+void task4(FILE *, Node **, treeNode **);
+void task5(FILE *, treeNode **);
