@@ -1,5 +1,6 @@
 #include "list.h"
 
+// functii ce sterg spatii inutile stocate in numele echipelor
 void removeReturn(Node ** node) {
     if ((*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] == '\r')
     {
@@ -7,7 +8,6 @@ void removeReturn(Node ** node) {
         (*node) -> team -> team_name = (char*)realloc((*node) -> team -> team_name, strlen((*node) -> team -> team_name));
     } 
 }
-
 void removespace(Node ** node) {
     if ((*node) -> team -> team_name[strlen((*node) -> team -> team_name) - 1] == ' ')
     {
@@ -16,7 +16,7 @@ void removespace(Node ** node) {
     } 
 }
 
-//adaugare element
+// functie ce aloca memorie si introduce echipele in lista
 void insertTeam ( Node ** node , int nr, char name[]) {
 
     if(* node == NULL) {
@@ -51,6 +51,7 @@ void insertTeam ( Node ** node , int nr, char name[]) {
     *node = newNode ;                                       
 }
 
+// functie ce aloca memorie si introduce jucatorii in echipa
 void insertPlayer(Player * players ,int p, char fName[], char sName[]) {
 
     players -> points = p; 
@@ -62,6 +63,8 @@ void insertPlayer(Player * players ,int p, char fName[], char sName[]) {
     strcpy(players -> secondName, sName);
 }
 
+
+// FUNCTII DE ELIBERARE MEMORIE
 void freeTeam(Node * n) {
 
     for(int i=0; i < (n) -> team -> nr_players; i++) {
@@ -79,13 +82,18 @@ void deleteNode(Node ** n, Node ** prev) {
         freeNode(n);
         (*prev) -> next = (*n);
     }
+    //am ajuns la utlimul element
     else {
         freeNode(n);
     }
 }
 
 void freeNode(Node ** n) {
-    freeTeam(*n);
+
+    // elibereaza memoria echipei din node
+    freeTeam(*n); 
+
+    // elibereaza memoria nodului
     Node * aux = (*n);
     *n = (*n) -> next;
     free(aux);

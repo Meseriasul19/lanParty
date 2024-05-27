@@ -1,6 +1,7 @@
 #include "tasks.h"
 
 void task1(FILE * input, FILE * output, Node ** node, int * v, int nr_teams) {
+
     //citire
     for(int i = 0; i < nr_teams; i++) { 
 
@@ -32,8 +33,8 @@ void task1(FILE * input, FILE * output, Node ** node, int * v, int nr_teams) {
         (*node) -> team -> team_points = team_p;
     }
 
-    //afisare
-    if(v[1] == 0 && v[2] == 0 && v[3] == 0 && v[4] == 0)
+    //afisare ( numai daca task-ul 1 este cerut )
+    if(v[1] == 0 && v[2] == 0 && v[3] == 0 && v[4] == 0) 
         for(Node * n = (*node); n!= NULL; n = n -> next) 
             fprintf(output,"%s\n", n->team->team_name);
 }
